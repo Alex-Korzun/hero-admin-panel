@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useHttp } from '../../hooks/http.hook';
-import { heroesFetching, heroesFetched, heroesFetchingError, heroesDeleting, heroesDeleted, heroesDeletingError } from '../../actions';
+import { heroesFetching, heroesFetched, heroesFetchingError, heroDeleting, heroDeleted, heroDeletingError } from '../../actions';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
@@ -16,11 +16,15 @@ const HeroesList = () => {
     const dispatch = useDispatch();
     const { request } = useHttp();
 
-    useEffect(() => {
-        dispatch(heroesFetching());
+    const fetchHeroes = () => {
         request("http://localhost:3001/heroes")
             .then(data => dispatch(heroesFetched(data)))
-            .catch(() => dispatch(heroesFetchingError()))
+            .catch(() => dispatch(heroesFetchingError()));
+    }
+
+    useEffect(() => {
+        dispatch(heroesFetching());
+        fetchHeroes();
 
         // eslint-disable-next-line
     }, []);
@@ -42,17 +46,11 @@ const HeroesList = () => {
     }
 
     const onDelete = (id) => {
-        dispatch(heroesDeleting());
-        // dispatch(heroesDeleted(heroes.filter((hero) => hero.id !== id)));
-
+        dispatch(heroDeleting());
+        
         request(`http://localhost:3001/heroes/${id}`, 'DELETE')
-            .then(dispatch(heroesDeleted()))
-            .catch(() => dispatch(heroesDeletingError()));
-
-        dispatch(heroesFetching());
-        request("http://localhost:3001/heroes")
-            .then(data => dispatch(heroesFetched(data)))
-            .catch(() => dispatch(heroesFetchingError()));
+            .then(() => dispatch(heroDeleted(heroes.filter(hero => hero.id !== id))))
+            .catch(() => dispatch(heroDeletingError()));
     }
 
     const elements = renderHeroesList(heroes);

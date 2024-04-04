@@ -17,22 +17,40 @@ export const heroesFetchingError = () => {
     }
 }
 
-export const heroesDeleting = () => {
+export const heroDeleting = () => {
     return {
-        type: 'HEROES_DELETING'
+        type: 'HERO_DELETING'
     }
 }
 
-export const heroesDeleted = (heroes) => {
-    console.log(heroes);
+export const heroDeleted = (heroes) => {
     return {
-        type: 'HEROES_DELETED',
+        type: 'HERO_DELETED',
         payload: heroes
     }
 }
 
-export const heroesDeletingError = () => {
+export const heroDeletingError = () => {
     return {
-        type: 'HEROES_DELETEING_ERROR'
+        type: 'HERO_DELETING_ERROR'
+    }
+}
+
+export const heroAdding = () => {
+    return {
+        type: 'HERO_ADDING'
+    }
+}
+
+export const heroAdded = (heroes) => {
+    return {
+        type: 'HERO_ADDED',
+        payload: heroes
+    }
+}
+
+export const heroAddingError = () => {
+    return {
+        type: 'HERO_ADDING_ERROR'
     }
 }

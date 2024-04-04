@@ -1,4 +1,9 @@
+import { v4 as uuidv4 } from 'uuid';
 
+import { useDispatch, useSelector } from "react-redux";
+import { heroAdding, heroAdded, heroAddingError } from "../../actions";
+import { useHttp } from '../../hooks/http.hook';
+import Spinner from "../spinner/Spinner";
 
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
@@ -11,15 +16,47 @@
 // данных из фильтров
 
 const HeroesAddForm = () => {
+    const { heroes, heroesLoadingStatus } = useSelector(state => state);
+    const { request } = useHttp();
+    const dispatch = useDispatch();
+
+    if (heroesLoadingStatus === "loading") {
+        return <Spinner/>;
+    } else if (heroesLoadingStatus === "error") {
+        return <h5 className="text-center mt-5">Ошибка загрузки</h5>
+    }
+
+    const addHero = (data) => {
+        dispatch(heroAdding());
+
+        const newHero = {
+            id: uuidv4(),
+            name: data.name.value,
+            description: data.text.value,
+            element: data.element.value
+        }
+
+        request('http://localhost:3001/heroes', 'POST', JSON.stringify(newHero))
+            .then(newHero => dispatch(heroAdded([...heroes, newHero])))
+            .catch(() => dispatch(heroAddingError()));
+    }
+
+    const fetchFilters = () => {
+        request('http://localhost:3001/filters')
+            .then(data => console.log(data))
+    }
+
+    fetchFilters();
+
     return (
-        <form className="border p-4 shadow-lg rounded">
+        <form className="border p-4 shadow-lg rounded" onSubmit={(e) => addHero(e.target)}>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label fs-4">Имя нового героя</label>
                 <input 
                     required
                     type="text" 
                     name="name" 
-                    className="form-control" 
+                    className="form-control"
                     id="name" 
                     placeholder="Как меня зовут?"/>
             </div>
