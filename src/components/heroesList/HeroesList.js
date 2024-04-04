@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useHttp } from '../../hooks/http.hook';
-import { heroesFetching, heroesFetched, heroesFetchingError, heroesDeleting, heroesDeleted } from '../../actions';
+import { heroesFetching, heroesFetched, heroesFetchingError, heroesDeleting, heroesDeleted, heroesDeletingError } from '../../actions';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
@@ -43,7 +43,16 @@ const HeroesList = () => {
 
     const onDelete = (id) => {
         dispatch(heroesDeleting());
-        dispatch(heroesDeleted(heroes.filter((hero) => hero.id !== id)));
+        // dispatch(heroesDeleted(heroes.filter((hero) => hero.id !== id)));
+
+        request(`http://localhost:3001/heroes/${id}`, 'DELETE')
+            .then(dispatch(heroesDeleted()))
+            .catch(() => dispatch(heroesDeletingError()));
+
+        dispatch(heroesFetching());
+        request("http://localhost:3001/heroes")
+            .then(data => dispatch(heroesFetched(data)))
+            .catch(() => dispatch(heroesFetchingError()));
     }
 
     const elements = renderHeroesList(heroes);

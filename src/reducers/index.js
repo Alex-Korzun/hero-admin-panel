@@ -33,6 +33,11 @@ const reducer = (state = initialState, action) => {
                 heroes: action.payload,
                 heroesLoadingStatus: 'idle'
             }
+        case 'HEROES_DELETING_ERROR':
+            return {
+                ...state,
+                heroesLoadingStatus: 'error'
+            }
         default: 
             return state
     }

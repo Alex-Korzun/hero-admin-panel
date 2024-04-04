@@ -24,8 +24,15 @@ export const heroesDeleting = () => {
 }
 
 export const heroesDeleted = (heroes) => {
+    console.log(heroes);
     return {
         type: 'HEROES_DELETED',
         payload: heroes
+    }
+}
+
+export const heroesDeletingError = () => {
+    return {
+        type: 'HEROES_DELETEING_ERROR'
     }
 }
