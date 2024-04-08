@@ -19,22 +19,34 @@
       "element": "water"
     },
     {
-      "id": 5,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
+      "id": "d5266877-2f84-4838-a681-552c2a0e8257",
+      "name": "Test Wind",
+      "description": "123",
+      "element": "wind"
+    },
+    {
+      "id": "2b6a13ea-6ff9-4284-ab73-43dc3a339b57",
+      "name": "Test Fire",
+      "description": "qwe",
+      "element": "fire"
+    },
+    {
+      "id": "b610371e-ce36-4461-944f-5d94d7dd6226",
+      "name": "Test Water",
+      "description": "qweqwe",
       "element": "water"
     },
     {
-      "id": "1fa74a2b-1e6a-4416-ae65-00594b171775",
-      "name": "qwe",
-      "description": "123",
-      "element": "fire"
+      "id": "97817c3a-a3ad-47e8-8e0b-840083b83a44",
+      "name": "Test Wind 2",
+      "description": "qweqwe",
+      "element": "wind"
     },
     {
-      "id": "51f72c24-c5e3-45b1-9622-1197f613e4bf",
-      "name": "Fire",
-      "description": "Fire description",
-      "element": "fire"
+      "id": "1eea2ede-c605-4c40-b267-55cb172ef26e",
+      "name": "Test Earth",
+      "description": "qweqw",
+      "element": "earth"
     }
   ],
   "filters": [

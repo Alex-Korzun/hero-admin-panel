@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { useDispatch, useSelector } from "react-redux";
-import { heroAdding, heroAdded, heroAddingError } from "../../actions";
+import { heroAdding, heroAdded, heroAddingError, fetchFilteredHeroes } from "../../actions";
 import { useHttp } from '../../hooks/http.hook';
 import Spinner from "../spinner/Spinner";
 
@@ -16,7 +16,7 @@ import Spinner from "../spinner/Spinner";
 // данных из фильтров
 
 const HeroesAddForm = () => {
-    const { heroes, heroesLoadingStatus } = useSelector(state => state);
+    const { heroes, heroesLoadingStatus, filters } = useSelector(state => state);
     const { request } = useHttp();
     const dispatch = useDispatch();
 
@@ -38,15 +38,28 @@ const HeroesAddForm = () => {
 
         request('http://localhost:3001/heroes', 'POST', JSON.stringify(newHero))
             .then(newHero => dispatch(heroAdded([...heroes, newHero])))
+            .then(() => dispatch(fetchFilteredHeroes([...heroes, newHero])))
             .catch(() => dispatch(heroAddingError()));
     }
 
-    const fetchFilters = () => {
-        request('http://localhost:3001/filters')
-            .then(data => console.log(data))
+    const renderOptions = (arr) => {
+        return arr.map(item => {
+            switch (item) {
+                case 'fire':
+                    return <option value={item}>Огонь</option>;
+                case 'water':
+                    return <option value={item}>Вода</option>;
+                case 'wind':
+                    return <option value={item}>Ветер</option>;
+                case 'earth':
+                    return <option value={item}>Земля</option>;
+                default: 
+                    return <option>Я владею элементом...</option>;
+            }
+        })
     }
 
-    fetchFilters();
+    const elements = renderOptions(filters);
 
     return (
         <form className="border p-4 shadow-lg rounded" onSubmit={(e) => addHero(e.target)}>
@@ -79,11 +92,7 @@ const HeroesAddForm = () => {
                     className="form-select" 
                     id="element" 
                     name="element">
-                    <option >Я владею элементом...</option>
-                    <option value="fire">Огонь</option>
-                    <option value="water">Вода</option>
-                    <option value="wind">Ветер</option>
-                    <option value="earth">Земля</option>
+                    {elements}
                 </select>
             </div>
 

@@ -1,7 +1,9 @@
 const initialState = {
     heroes: [],
     heroesLoadingStatus: 'idle',
-    filters: []
+    filtersLoadingStatus: 'idle',
+    filters: [],
+    filteredHeroes: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -30,8 +32,7 @@ const reducer = (state = initialState, action) => {
         case 'HERO_DELETED':
             return {
                 ...state,
-                heroesLoadingStatus: 'idle',
-                heroes: action.payload
+                heroesLoadingStatus: 'idle'
             }
         case 'HERO_DELETING_ERROR':
             return {
@@ -53,6 +54,27 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 heroesLoadingStatus: 'error'
+            }
+        case 'FILTERS_FETCHING':
+            return {
+                ...state,
+                filtersLoadingStatus: 'loading'
+            }
+        case 'FILTERS_FETCHED':
+            return {
+                ...state,
+                filtersLoadingStatus: 'idle',
+                filters: action.payload
+            }
+        case 'FILTERS_FETCHING_ERROR':
+            return {
+                ...state,
+                filtersLoadingStatus: 'error'
+            }
+        case 'FETCH_FILTERED_HEROES':
+            return {
+                ...state,
+                filteredHeroes: action.payload
             }
         default: 
             return state;
