@@ -3,7 +3,8 @@ const initialState = {
     heroesLoadingStatus: 'idle',
     filtersLoadingStatus: 'idle',
     filters: [],
-    filteredHeroes: []
+    filteredHeroes: [],
+    activeFilter: 'all'
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +18,9 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 heroes: action.payload,
+                filteredHeroes: state.activeFilter === 'all' ?
+                                action.payload :
+                                action.payload.filter(item => item.element === state.activeFilter),
                 heroesLoadingStatus: 'idle'
             }
         case 'HEROES_FETCHING_ERROR':
@@ -24,31 +28,28 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 heroesLoadingStatus: 'error'
             }
-        case 'HERO_DELETING':
-            return {
-                ...state,
-                heroesLoadingStatus: 'loading'
-            }
         case 'HERO_DELETED':
+            const newHeroListForDeletion = state.heroes.filter(item => item.id !== action.payload);
             return {
                 ...state,
-                heroesLoadingStatus: 'idle'
+                heroes: newHeroListForDeletion,
+                filteredHeroes: state.activeFilter === 'all' ?
+                                newHeroListForDeletion :
+                                newHeroListForDeletion.filter(item => item.element === state.activeFilter)
             }
         case 'HERO_DELETING_ERROR':
             return {
                 ...state,
                 heroesLoadingStatus: 'error'
             }
-        case 'HERO_ADDING':
-            return {
-                ...state,
-                heroesLoadingStatus: 'loading'
-            }
         case 'HERO_ADDED':
+            const newHeroListForAdding = [...state.heroes, action.payload];
             return {
                 ...state,
-                heroesLoadingStatus: 'idle',
-                heroes: action.payload
+                heroes: newHeroListForAdding,
+                filteredHeroes: state.activeFilter === 'all' ?
+                                newHeroListForAdding :
+                                newHeroListForAdding.filter(item => item.element === state.activeFilter)
             }
         case 'HERO_ADDING_ERROR':
             return {
@@ -71,10 +72,13 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 filtersLoadingStatus: 'error'
             }
-        case 'FETCH_FILTERED_HEROES':
+        case 'ACTIVE_FILTER_CHANGED':
             return {
                 ...state,
-                filteredHeroes: action.payload
+                activeFilter: action.payload,
+                filteredHeroes: action.payload === 'all' ?
+                                state.heroes :
+                                state.heroes.filter(item => item.element === action.payload)
             }
         default: 
             return state;
