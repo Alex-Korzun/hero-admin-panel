@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
 
 import { useHttp } from '../../hooks/http.hook';
-import Spinner from "../spinner/Spinner";
 import { heroAdded, heroAddingError } from "../../actions";
 
 // Задача для этого компонента:
@@ -21,7 +20,7 @@ const HeroesAddForm = () => {
     const [heroDescr, setHeroDescr] = useState('');
     const [heroElement, setHeroElement] = useState('');    
 
-    const { filtersLoadingStatus, filters } = useSelector(state => state);
+    const { filtersLoadingStatus, filters } = useSelector(state => state.filtersReducer);
     const { request } = useHttp();
     const dispatch = useDispatch();
 

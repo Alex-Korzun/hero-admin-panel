@@ -25,12 +25,6 @@
       "element": "fire"
     },
     {
-      "id": "b610371e-ce36-4461-944f-5d94d7dd6226",
-      "name": "Test Water",
-      "description": "qweqwe",
-      "element": "water"
-    },
-    {
       "id": "b6c1d99c-6ef4-48f2-a0eb-390ce6504499",
       "name": "Test Wind2",
       "description": "Test Wind 2",
@@ -41,33 +35,39 @@
       "name": "Earth Test",
       "description": "Earth Test",
       "element": "earth"
+    },
+    {
+      "id": "8ecf3d82-054d-4bb2-b266-8787741ba192",
+      "name": "Test Water",
+      "description": "test water",
+      "element": "water"
     }
   ],
   "filters": [
     {
-        "name": "all",
-        "label": "Все",
-        "className": "btn-outline-dark"
-      },
-      {
-        "name": "fire",
-        "label": "Огонь",
-        "className": "btn-danger"
-      },
-      {
-        "name": "water",
-        "label": "Вода",
-        "className": "btn-primary"
-      },
-      {
-        "name": "wind",
-        "label": "Ветер",
-        "className": "btn-success"
-      },
-      {
-        "name": "earth",
-        "label": "Земля",
-        "className": "btn-secondary"
-      }
+      "name": "all",
+      "label": "Все",
+      "className": "btn-outline-dark"
+    },
+    {
+      "name": "fire",
+      "label": "Огонь",
+      "className": "btn-danger"
+    },
+    {
+      "name": "water",
+      "label": "Вода",
+      "className": "btn-primary"
+    },
+    {
+      "name": "wind",
+      "label": "Ветер",
+      "className": "btn-success"
+    },
+    {
+      "name": "earth",
+      "label": "Земля",
+      "className": "btn-secondary"
+    }
   ]
 }
