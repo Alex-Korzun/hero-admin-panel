@@ -4,16 +4,11 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { createSelector } from 'reselect';
 
 import { useHttp } from '../../hooks/http.hook';
-import { heroesFetching, heroesFetched, heroesFetchingError, heroDeleted, heroDeletingError } from '../../actions';
+import { fetchHeroes, heroDeleted, heroDeletingError } from '../../actions';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
 import './heroesList.scss';
-
-// Задача для этого компонента:
-// При клике на "крестик" идет удаление персонажа из общего состояния
-// Усложненная задача:
-// Удаление идет и с json файла при помощи метода DELETE
 
 const HeroesList = () => {
     const filteredHeroesSelector = createSelector(
@@ -28,28 +23,13 @@ const HeroesList = () => {
         }
     );
 
-    // const filteredHeroes = useSelector(state => {
-    //     if (state.filtersReducer.activeFilter === 'all') {
-    //         return state.heroesReducer.heroes;
-    //     } else {
-    //         return state.heroesReducer.heroes.filter(item => item.element === state.filtersReducer.activeFilter);
-    //     }
-    // });
-
     const filteredHeroes = useSelector(filteredHeroesSelector);
     const { heroesLoadingStatus } = useSelector(state => state.heroesReducer.heroesLoadingStatus);
     const dispatch = useDispatch();
     const { request } = useHttp();
 
-    const fetchHeroes = () => {
-        request("http://localhost:3001/heroes")
-            .then(data => dispatch(heroesFetched(data)))
-            .catch(() => dispatch(heroesFetchingError()));
-    }
-
     useEffect(() => {
-        dispatch(heroesFetching());
-        fetchHeroes();
+        dispatch(fetchHeroes(request));
 
         // eslint-disable-next-line
     }, []);
