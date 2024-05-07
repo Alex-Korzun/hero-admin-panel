@@ -13,12 +13,6 @@
       "element": "water"
     },
     {
-      "id": "d5266877-2f84-4838-a681-552c2a0e8257",
-      "name": "Test Wind",
-      "description": "123",
-      "element": "wind"
-    },
-    {
       "id": "2b6a13ea-6ff9-4284-ab73-43dc3a339b57",
       "name": "Test Fire",
       "description": "qwe",
@@ -35,12 +29,6 @@
       "name": "Earth Test",
       "description": "Earth Test",
       "element": "earth"
-    },
-    {
-      "id": "8ecf3d82-054d-4bb2-b266-8787741ba192",
-      "name": "Test Water",
-      "description": "test water",
-      "element": "water"
     }
   ],
   "filters": [
