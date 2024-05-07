@@ -4,13 +4,15 @@ import { useState } from 'react';
 
 import { useHttp } from '../../hooks/http.hook';
 import { heroAdded, heroAddingError } from "../heroesList/heroesSlice";
+import { selectAll } from '../heroesFilters/filtersSlice';
 
 const HeroesAddForm = () => {
     const [heroName, setHeroName] = useState('');
     const [heroDescr, setHeroDescr] = useState('');
     const [heroElement, setHeroElement] = useState('');    
 
-    const { filtersLoadingStatus, filters } = useSelector(state => state.filters);
+    const { filtersLoadingStatus } = useSelector(state => state.filters);
+    const filters = useSelector(selectAll);
     const { request } = useHttp();
     const dispatch = useDispatch();
 
